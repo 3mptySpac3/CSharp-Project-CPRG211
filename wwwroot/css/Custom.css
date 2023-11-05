@@ -1,0 +1,28 @@
+﻿
+
+/* Override Bootstrap button active state */
+.btn-primary:active,
+.btn-primary:focus,
+.btn-primary.active {
+    background-color: black;
+    border-color: black;
+    box-shadow: none;
+}
+
+/* Override Bootstrap button hover state */
+.btn-primary:hover {
+    background-color: dodgerblue;
+    border-color: black 1px;
+    opacity: 0.5;
+}
+S
+/* Override Bootstrap button focus state */
+.btn-primary:focus {
+    outline: black;
+    box-shadow: black;
+}
+
+/* Override Bootstrap button focus state duration */
+.btn-primary:focus {
+    transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out;
+}

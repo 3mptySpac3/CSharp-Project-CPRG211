@@ -1,0 +1,84 @@
+﻿@* Import the required namespaces and services *@
+@using JPsShopz.Shared
+@using JPsShopz.Services
+@inject CartService CartService
+@using JPsShopz.Authenticate
+@attribute [Authorize]
+@using Microsoft.AspNetCore.Authorization
+
+@* Set the route for this page *@
+@page "/orders"
+
+@* Render a grid layout for the cart items *@
+<div class="row">
+    @foreach (var product in CartService.CartItems)
+    {
+        <div class="col-md-4">
+            <ProductCard Product="product">
+                <button class="btn btn-danger" @onclick="() => RemoveFromCart(product)">Delete</button>
+            </ProductCard>
+        </div>
+    }
+</div>
+
+@* Render the Checkout button *@
+<div class="text-right">
+    <button class="btn btn-primary" @onclick="ShowCheckout">Checkout</button>
+</div>
+
+@* Render the modal for the Checkout process *@
+@if (showCheckout)
+{
+    <div class="modal" style="display:block; background-color:rgba(0,0,0,0.5);">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Checkout</h5>
+                    <button type="button" class="close" @onclick="HideCheckout">
+                        <span>&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <ul>
+                        @foreach (var product in CartService.CartItems)
+                        {
+                            <li>@product.Title</li>
+                        }
+                    </ul>
+                    <h5>Total: @CartService.GetTotalPrice().ToString("C")</h5>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" @onclick="ConfirmCheckout">Confirm</button>          
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    @* Define a flag to control the display of the Checkout modal *@
+    private bool showCheckout = false;
+    
+    private void ShowCheckout() @* Show the Checkout modal *@
+    {
+        showCheckout = true;
+    }
+
+    private void HideCheckout() @* Hide the Checkout modal *@
+    {
+        showCheckout = false;
+    }
+
+    private void RemoveFromCart(Product product) @* Remove an item from the cart *@
+    {
+        CartService.RemoveFromCart(product);
+    }
+
+    private void ConfirmCheckout() @* Confirm the Checkout process and clear the cart *@
+    {
+        HideCheckout();
+        CartService.ClearCart();
+    }
+}
+
+

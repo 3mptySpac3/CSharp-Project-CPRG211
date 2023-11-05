@@ -1,0 +1,30 @@
+﻿@inject IJSRuntime JSRuntime
+@inject NavigationManager NavigationManager
+@inject UserAuthenticationService AuthenticationService // Inject your UserAuthenticationService
+@using Microsoft.AspNetCore.Authorization
+
+
+@using JPsShopz.Authenticate
+@attribute [Authorize]
+
+@page "/settings"
+
+<h3>Settings</h3>
+
+<button @onclick="Logout">Logout</button>
+
+@code {
+    private async Task Logout()
+    {
+        var confirmed = await JSRuntime.InvokeAsync<bool>("confirm", "Are you sure you want to logout?");
+        if (confirmed)
+        {
+            // Call the LogoutAsync method from the AuthenticationService
+            await AuthenticationService.LogoutAsync();
+
+            // After logout, navigate to the login page
+            NavigationManager.NavigateTo("/login", true); // 'true' to force load the page which will clear the state
+        }
+    }
+}
+

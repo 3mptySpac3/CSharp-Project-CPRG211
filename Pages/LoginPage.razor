@@ -1,0 +1,65 @@
+﻿@using Microsoft.AspNetCore.Components
+@inject IJSRuntime JSRuntime
+@inject NavigationManager NavigationManager
+@inject Authenticate.UserAuthenticationService AuthenticationService
+
+
+
+<!--Define the routing for the Login page-->
+@page "/"
+@page "/login"
+
+<!--Render the Login title and the welcome message-->
+<h3>Login</h3>
+<div class="text-center">
+    <h6>Welcome to is <b>JPsShopz!</b> In this shop, <b>Time</b> with <b>JP</b> is absolute <br /> Buy Now! </h6>
+</div>
+
+<!--Render the login form-->
+<div class="login-container">
+    <div class="login-form">
+        <div>
+            <label for="username">Username:</label>
+            <input id="username" type="text" @bind="Username" />
+        </div>
+        <div>
+            <label for="password">Password:</label>
+            <input id="password" type="password" @bind="Password" />
+        </div>
+        <button @onclick="Login">Login</button>
+    </div>
+</div>
+
+@code {
+    // Declare properties to store the entered username and password
+    private string Username { get; set; }
+    private string Password { get; set; }
+
+    // Define the Login method that is called when the Login button is clicked
+    private async Task Login()
+    {
+        Console.WriteLine($"Attempting to login with username: {Username}, password: {Password}");
+
+        bool isAuthenticated = await AuthenticationService.AuthenticateUserAsync(Username, Password);
+
+        if (isAuthenticated)
+        {
+            // Ask the user for confirmation before logging in
+            var confirmed = await JSRuntime.InvokeAsync<bool>("confirm", "Login?");
+
+            // If the user confirms, navigate to the Shop page
+            if (confirmed)
+            {
+                NavigationManager.NavigateTo("/shop");
+            }
+        }
+        else
+        {
+            // If the entered credentials are incorrect, display an alert and clear the input fields
+            await JSRuntime.InvokeVoidAsync("alert", "Invalid Username or Password");
+            Username = "";
+            Password = "";
+        }
+    }
+
+}

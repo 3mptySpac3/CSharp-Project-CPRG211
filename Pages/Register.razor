@@ -1,0 +1,60 @@
+﻿@using Microsoft.AspNetCore.Components
+@inject NavigationManager NavigationManager
+@inject JPsShopz.Data.Database Database
+
+@page "/register"
+
+<h3>Register</h3>
+<div class="text-center">
+    <h6>Create a new account for <b>JPsShopz!</b></h6>
+</div>
+
+<div class="register-container">
+    <div class="register-form">
+        <div>
+            <label for="newUsername">Username:</label>
+            <input id="newUsername" type="text" @bind="newUsername" />
+        </div>
+        <div>
+            <label for="newPassword">Password:</label>
+            <input id="newPassword" type="password" @bind="newPassword" />
+        </div>
+        <button @onclick="RegisterUser">Register</button>
+    </div>
+</div>
+
+@code {
+    private string newUsername { get; set; }
+    private string newPassword { get; set; }
+
+    private async Task RegisterUser()
+    {
+        if (!string.IsNullOrWhiteSpace(newUsername) && !string.IsNullOrWhiteSpace(newPassword))
+        {
+            // Ideally, check if the user already exists before attempting to create a new one
+            var existingUser = await Database.GetUserByUsernameAsync(newUsername);
+            if (existingUser != null)
+            {
+                // Inform the user that the username is already taken
+                // Use JS interop or another method to display the message
+                return;
+            }
+
+            var user = new JPsShopz.Data.User
+                {
+                    Username = newUsername,
+                    Password = newPassword // In a real application, the password should be hashed
+                };
+
+            await Database.AddUserAsync(user);
+
+            // After registration, redirect the user to the login page
+            NavigationManager.NavigateTo("/login");
+        }
+        else
+        {
+            // Inform the user that they need to fill in all fields
+            // Use JS interop or another method to display the message
+        }
+    }
+}

@@ -1,0 +1,58 @@
+﻿<!--Import the necessary namespaces-->
+@using JPsShopz.Services;
+@using JPsShopz.Shared;
+@inject CartService CartService
+@using JPsShopz.Authenticate
+@attribute [Authorize]
+@using Microsoft.AspNetCore.Authorization
+
+
+ <!--Define the routing for the Shop page-->
+
+@page "/shop"
+
+<h3>Shop</h3>
+
+<div class="row">
+    @foreach (var product in products)
+    {
+        <div class="col-md-4">
+            <ProductCard Product="product" OnBuy="AddToCart" />
+        </div>
+    }
+</div>
+
+<!-- Define the list of products to display on the Shop page-->
+@code {
+    private List<Product> products = new List<Product>
+    {
+        new Product { Id = 1, Title = "Coding", ImageUrl = "Images/CodingWJP.jpg", Description = "Learn to code with JP. 0-100%", Price = 11020.00m },
+        new Product { Id = 2, Title = "Chess", ImageUrl = "Images/ChessW.jpg", Description = "Ill show you how to move the knight.", Price = 30.95m },
+        new Product { Id = 3, Title = "Sing", ImageUrl = "Images/SingingW.jpg", Description = "You teach me how to sing.", Price = 12.95m },
+        new Product { Id = 4, Title = "Lunch", ImageUrl = "Images/CouldrenW.jpg", Description = "Lets have lunch.", Price = 50.00m },
+        new Product { Id = 5, Title = "Cook", ImageUrl = "Images/CookW.jpg", Description = "Ill show you how to make KFC.", Price = 70.95m },
+        new Product { Id = 6, Title = "Dinner", ImageUrl = "Images/DinnerW.jpg", Description = "Lets have dinner, you pay!", Price = 69.99m },
+        new Product { Id = 7, Title = "Run", ImageUrl = "Images/RunW.jpg", Description = "Why are you running?.", Price = 200.05m },
+        new Product { Id = 8, Title = "Road Trip", ImageUrl = "Images/RoadTW.jpg", Description = "NFT to the Moon.", Price = 2048.00m },
+        new Product { Id = 9, Title = "Game", ImageUrl = "Images/GameW.jpg", Description = "Lets play a game.", Price = 2.00m },
+        new Product { Id = 10, Title = "Drink", ImageUrl = "Images/DrinkW.jpg", Description = "Drinking with JP.", Price = 99.99m },
+        new Product { Id = 11, Title = "Movie", ImageUrl = "Images/MovieW.jpg", Description = "Watch a movie with JP.", Price = 500.00m },
+        new Product { Id = 12, Title = "Random", ImageUrl = "Images/ThinkW.jpg", Description = "I choose....", Price = 1000000.99m },
+
+        
+        // Add more products here
+    };
+
+
+    <!-- Define the AddToCart method that is called when the OnBuy event is triggered from a ProductCard-->
+
+    private void AddToCart(Product product)
+    {
+        CartService.AddToCart(product);
+    }
+}
+
+
+
+
+

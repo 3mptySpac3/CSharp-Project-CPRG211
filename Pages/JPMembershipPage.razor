@@ -1,0 +1,68 @@
+﻿@* Import the required namespaces and services *@
+@using JPsShopz.Services;
+@using JPsShopz.Shared;
+@inject CartService CartService
+@using JPsShopz.Authenticate
+@attribute [Authorize]
+@using Microsoft.AspNetCore.Authorization
+
+
+
+
+@* Set the route for this page *@
+@page "/jpmembership"
+
+@* Render a grid layout for membership products *@
+<div class="row">
+    @* Iterate through the membershipProducts list and render a ProductCard for each product *@
+    @foreach (var membershipProduct in membershipProducts)
+    {
+        <div class="col-md-4 membership-item">
+            <ProductCard Product="membershipProduct" OnBuy="AddToCart" />
+        </div>
+    }
+</div>
+...
+
+@* Define the code block for this page *@
+@code {
+    @* Initialize the membershipProducts list with sample data *@
+    private List<Product> membershipProducts = new List<Product>
+    {
+        new Product
+        {
+            Id = 100,
+            Title = "JPMembership - Silver",
+            ImageUrl = "Images/Profile4.png",
+            Description = "Become a JP Member and enjoy my awsomness! " +
+            "Includes: A Day with JP. JP listens to all your problems. JP impresses your parents, and many more...",
+            Price = 3000.99m
+        },
+        new Product
+        {
+            Id = 101,
+            Title = "JPMembership - Gold",
+            ImageUrl = "Images/Profile.jpg",
+            Description = "Unlock high end features, exclusive benefits! " +
+            "Includes: Everything from Silver tier, plus exclusive events, discounts, and more...",
+            Price = 5000.99m
+        },
+        new Product
+        {
+            Id = 102,
+            Title = "JPMembership - Ruby",
+            ImageUrl = "Images/Profile1.jpg",
+            Description = "Only the real OG's get Ruby. The ultimate exclusive benefits! " +
+            "Includes: Everything from Gold tier, plus one-on-one time with JP, special surprises, and more...",
+            Price = 8000.99m
+        },
+    };
+
+    @* AddToCart method that adds the selected product to the cart *@
+    private void AddToCart(Product product)
+    {
+        CartService.AddToCart(product);
+    }
+}
+
+

@@ -1,23 +1,27 @@
-CSharp-Project-CPRG211
-Welcome to the final project for my C# course! This project features a mini shop application built with .NET MAUI, showcasing a user authentication system that connects to a database. Dive into the code to see how it works!
+# CSharp-Project-CPRG211
 
-Validations: Check out the Validation Branch
+Welcome to the final project for my C# course! This project features a mini-shop application built with `.NET MAUI`, showcasing a user authentication system that connects to a database. Dive into the code to see how it works!
 
-Features
-User Authentication: Secure login system.
-Database Integration: Efficiently connects with a database for data storage.
-.NET MAUI Framework: Utilizes the cross-platform capabilities of .NET MAUI.
-Getting Started
+## Validation 
+Check out the [Images](https://github.com/3mptySpac3/CSharp-Project-CPRG211/tree/Validation-Solution/ValidationOOPSem3) in the **Validation Branch**.
+
+## Features
+
+- **User Authentication**: Secure login system.
+- **Database Integration**: Efficiently connects with a database for data storage.
+- **.NET MAUI Framework**: Utilizes the cross-platform capabilities of `.NET MAUI`.
+
+## Getting Started
+
 To explore the project, follow the steps below:
 
-Prerequisites
-.NET 6 SDK
-Visual Studio 2022 or later
-Installation
+### Prerequisites
 
-Clone the repository:
-git clone https://github.com/3mptySpac3/CSharp-Project-CPRG211.git
+- .NET 6 SDK
+- Visual Studio 2022 or later
 
-Navigate to the project directory:
-cd CSharp-Project-CPRG211
+### Installation
 
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/3mptySpac3/CSharp-Project-CPRG211.git
